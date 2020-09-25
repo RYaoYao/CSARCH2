@@ -159,6 +159,7 @@ function convert(){
 	var hexdisp = document.getElementById('hexdisp');
 	var sign = 0;
 	res = false;
+	pow = parseInt(inputpow.value);
 	if (inputnum.value.includes("-"))
 	{
 			sign = 1;
@@ -198,13 +199,12 @@ function convert(){
 			for (j= c.length; j<52;j++)
 				c += '0';
 			str = a + "." + c;
-			pow = parseInt(inputpow.value)  + (i * -1);
+			pow  += (i * -1);
 		}
 
 	}
 	else{
 		res =  /[^x0-1]/.test(inputnum.value);
-		pow = parseInt(inputpow.value)
 	}
 
 
