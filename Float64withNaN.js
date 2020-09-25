@@ -160,6 +160,8 @@ function convert(){
 	var sign = 0;
 	res = false;
 	pow = parseInt(inputpow.value);
+
+	//check if it is negative
 	if (inputnum.value.includes("-"))
 	{
 			sign = 1;
@@ -177,10 +179,11 @@ function convert(){
 		if( /[^0-1]/.test(a) == true | /[^0-1]/.test(b) == true )
 		res = true;
 
+		//normalize the binary if it has only decimals
 		if(a.length == 0)	{	
 
 		var c = '';
-		var i =0;
+		var i =0;	
 		var flag = 1;
 		while(flag)
 			{
@@ -203,10 +206,9 @@ function convert(){
 		}
 
 	}
-	else{
+	else
 		res =  /[^x0-1]/.test(inputnum.value);
-	}
-
+	
 
 
 	if(!res)
@@ -219,6 +221,13 @@ function convert(){
 		hexdisp.innerHTML = res.hex;
 		
 	}
+}
+else
+{
+	var res = Float64(0,0,0,res);
+
+		bindisp.innerHTML = res.binary_representation;
+		hexdisp.innerHTML = res.hex;
 }
 
 }
