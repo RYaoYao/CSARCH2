@@ -101,7 +101,9 @@ function Float64Result(sign, exponent, mantissa) {
 // pow: power (2^n)
 // overflowType: 0 = infinity; 1 = signaling NaN; 2 = quiet NaN
 
-function Float64(sign, bin, pow, overflowType = 0) {
+function Float64(sign, bin, pow, NaN) {
+	if(NaN)
+		return Float64Result(sign, '11111111111', '1111111111111111111111111111111111111111111111111111')
 	// Special Case: Zero
 	if (bin === '0')
 		return Float64Result(sign, '00000000000', '0000000000000000000000000000000000000000000000000000');
@@ -123,25 +125,11 @@ function Float64(sign, bin, pow, overflowType = 0) {
 
 
 	let e = Math.min(1023 + parseInt(pow) + a.length - 1, 2047);
-	console.log(e);
+
 	
-	if (e == 2047) {
-		switch (overflowType) {
-			case 0:
-				// Special Case: Infinity
+	if (e == 2047)
+			
 				return Float64Result(sign, '11111111111', '0000000000000000000000000000000000000000000000000000');
-				break;
-				
-			case 1:
-				// Special Case: Signaling NaN
-				a = '0' + a;
-				break;
-				
-			case 2:
-				// Special Case: Quiet NaN
-				a = '1' + a;
-		}
-	}
 	
 	
 	// Special Case: Denormalized
@@ -168,17 +156,38 @@ function convert(){
 	var inputpow = document.getElementById('inputpow');
 	var bindisp = document.getElementById('bindisp');
 	var hexdisp = document.getElementById('hexdisp');
-	
 	var sign = 0;
-	console.log(inputnum.value)
+	res = false;
+	if (inputnum.value.includes('.')) {
+		let arr = inputnum.value.split('.');
+		a = arr[0];
+		b = arr[1];
+		if( /[^0-1]/.test(a) == true | /[^0-1]/.test(b) == true )
+		res = true;
+	}
+	else{
+		res =  /[^x0-1]/.test(inputnum.value);
+	}
+	if(!res)
+	{
 	if (inputnum.value != '') {
+		
 		if (inputnum.value.includes("-"))
 			sign = 1;
 
-		var res = Float64(sign,inputnum.value,inputpow.value);
+		var res = Float64(sign,inputnum.value,inputpow.value,res);
 
 		bindisp.innerHTML = res.binary_representation;
 		hexdisp.innerHTML = res.hex;
+		
 	}
+}
+else
+{
+	var res = Float64(0,0,0,res);
+
+		bindisp.innerHTML = res.binary_representation;
+		hexdisp.innerHTML = res.hex;
+}
 }
 
