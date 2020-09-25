@@ -38,6 +38,7 @@ function DecToBin(num, limit = 20) {
 	
 	return str;
 }
+
 // Base 2 to base 10.
 // Automatically converted to integer.
 function BinToDec(bin) {
@@ -158,36 +159,67 @@ function convert(){
 	var hexdisp = document.getElementById('hexdisp');
 	var sign = 0;
 	res = false;
-	if (inputnum.value.includes('.')) {
-		let arr = inputnum.value.split('.');
+	if (inputnum.value.includes("-"))
+	{
+			sign = 1;
+			str = inputnum.value.slice(1);
+			console.log(inputnum.value);
+		}
+		else
+		str = inputnum.value;
+	//Check if input is binary
+
+	if (str.includes('.')) {
+		let arr = str.split('.');
 		a = arr[0];
 		b = arr[1];
 		if( /[^0-1]/.test(a) == true | /[^0-1]/.test(b) == true )
 		res = true;
+
+		if(a.length == 0)	{	
+
+		var c = '';
+		var i =0;
+		var flag = 1;
+		while(flag)
+			{
+				if(b[i] == '1')
+				{
+				a += b[i];
+					i++;
+				flag = 0;
+				}
+				else if(b[i] == '0')
+				i++;
+			}
+			for(j=i-1; j< b.length-1 && j<52;j++)
+				c += b[j+1];
+	
+			for (j= c.length; j<52;j++)
+				c += '0';
+			str = a + "." + c;
+			pow = parseInt(inputpow.value)  + (i * -1);
+		}
+
 	}
 	else{
 		res =  /[^x0-1]/.test(inputnum.value);
+		pow = parseInt(inputpow.value)
 	}
+
+
+
 	if(!res)
 	{
 	if (inputnum.value != '') {
 		
-		if (inputnum.value.includes("-"))
-			sign = 1;
-
-		var res = Float64(sign,inputnum.value,inputpow.value,res);
+		var res = Float64(sign,str,pow,res);
 
 		bindisp.innerHTML = res.binary_representation;
 		hexdisp.innerHTML = res.hex;
 		
 	}
 }
-else
-{
-	var res = Float64(0,0,0,res);
 
-		bindisp.innerHTML = res.binary_representation;
-		hexdisp.innerHTML = res.hex;
-}
 }
 
