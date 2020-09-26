@@ -180,7 +180,7 @@ function convert(){
 		res = true;
 
 		//normalize the binary if it has only decimals
-		if(a.length == 0)	{	
+		if(a.length == 0 )	{	
 
 		var c = '';
 		var i =0;	
@@ -204,8 +204,33 @@ function convert(){
 			str = a + "." + c;
 			pow  += (i * -1);
 		}
+		else if(parseInt(a) == 0)
+		{
+			
+		var c = '';
+		var i =0;	
+		var flag = 1;
+		while(flag)
+			{
+				if(b[i] == '1')
+				{
+				a = b[i];
+					i++;
+				flag = 0;
+				}
+				else if(b[i] == '0')
+				i++;
+			}
+			for(j=i-1; j< b.length-1 && j<52;j++)
+				c += b[j+1];
+	
+			for (j= c.length; j<52;j++)
+				c += '0';
+			str = a + "." + c;
+			pow  += (i * -1);
+		}
+		}
 
-	}
 	else
 		res =  /[^x0-1]/.test(inputnum.value);
 	
