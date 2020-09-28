@@ -166,7 +166,7 @@ function convert(){
 	{
 			sign = 1;
 			str = inputnum.value.slice(1);
-			console.log(inputnum.value);
+			console.log(str);
 		}
 		else
 		str = inputnum.value;
@@ -232,7 +232,7 @@ function convert(){
 		}
 
 	else
-		res =  /[^x0-1]/.test(inputnum.value);
+		res =  /[^x0-1]/.test(str);
 	
 
 
